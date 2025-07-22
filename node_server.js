@@ -1,6 +1,7 @@
 const express = require('express');
+const http = require('http');
 const path = require('path');
-const { WebSocketServer } = require('ws');
+const { Server } = require('socket.io');
 const { exec } = require('child_process');
 
 const app = express();
@@ -8,24 +9,22 @@ const port = 3000;
 
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, 'frontend/build')));
+const server = http.createServer(app);
+const io = new Server(server, { cors: { origin: '*' } });
 
-// WebSocket server for real-time communication
-const wss = new WebSocketServer({ port: 8080 });
-
-wss.on('connection', function connection(ws) {
-  ws.on('message', function message(data) {
+io.on('connection', (socket) => {
+  socket.on('command', (data) => {
     console.log('received: %s', data);
-    // Example: Start Docker container with received command
     exec(`docker run --rm recovery-tool ${data}`, (err, stdout, stderr) => {
       if (err) {
-        ws.send(`Error: ${stderr}`);
+        socket.emit('output', `Error: ${stderr}`);
         return;
       }
-      ws.send(`Output: ${stdout}`);
+      socket.emit('output', `Output: ${stdout}`);
     });
   });
 });
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
