@@ -25,3 +25,4 @@ def create_app(config_filename='config.Config'):
     app.register_blueprint(main_blueprint)
     return app
 
+

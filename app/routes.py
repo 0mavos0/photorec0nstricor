@@ -15,7 +15,6 @@ def start_recovery():
     sanitized_drive = sanitize_input(drive_path)
     start_recovery_process(sanitized_drive)
     return jsonify({'message': 'Recovery started'}), 202
-
 from flask import Blueprint, request, jsonify
 from .utils import sanitize_input, is_valid_drive_path, list_drives
 
