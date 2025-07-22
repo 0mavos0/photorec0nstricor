@@ -9,8 +9,8 @@ def sanitize_input(input_str: str) -> str:
 
 
 def is_valid_drive_path(drive_path: str) -> bool:
-    """Validate that the drive path resembles a block device."""
-    return re.match(r'^/dev/sd[a-z]$', drive_path) is not None
+    """Validate that the drive path resembles a block device or partition."""
+    return re.match(r'^/dev/sd[a-z]\d*$', drive_path) is not None
 
 
 def validate_path(path: str, path_type: str) -> Tuple[bool, str]:
