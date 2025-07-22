@@ -34,12 +34,17 @@ pip install -r requirements.txt
 python -m app.main
 ```
 
+## Node Socket.IO Server
+
+A small Node.js server now uses Socket.IO to serve the React frontend and forward commands to a Docker container. Install the dependencies and run:
+=======
 
 ## Node Socket.IO Server
 
 A small Node.js server now uses Socket.IO to serve the React frontend and forward commands to a Docker container. Install the dependencies and run:
 =======
 2. In a separate terminal, start the Node server:
+
 
 
 ```bash
@@ -54,7 +59,6 @@ with a `drive_path` field pointing to a valid `/dev` device.
 WebSocket communication happens via Socket.IO on the same port. Clients
 can emit a `command` event and listen for `output` messages.
 
-=======
 
 Navigate to `http://localhost:3000` to use the frontend.
 
