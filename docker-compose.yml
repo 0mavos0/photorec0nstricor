@@ -1,0 +1,5 @@
+version: '3'
+services:
+  photorec0nstrictor:
+    image: alpine
+    command: ["sh", "-c", "echo running photorec"]
