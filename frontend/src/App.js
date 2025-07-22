@@ -34,7 +34,7 @@ function App() {
     fetch(`${backendUrl}/start_recovery`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ drivePath: selectedDrive.path }),
+      body: JSON.stringify({ drive_path: selectedDrive.path }),
     })
     .then(response => {
       if (response.ok) {
