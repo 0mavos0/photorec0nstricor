@@ -1,7 +1,15 @@
 const express = require('express');
 const path = require('path');
 const { WebSocketServer } = require('ws');
-const { exec } = require('child_process');
+const { spawn } = require('child_process');
+
+function sanitizeArgs(data) {
+  const str = data.toString().trim();
+  if (!/^[a-zA-Z0-9_\-./ ]*$/.test(str)) {
+    return null;
+  }
+  return str.length > 0 ? str.split(/\s+/) : [];
+}
 
 const app = express();
 const port = 3000;
@@ -15,13 +23,26 @@ const wss = new WebSocketServer({ port: 8080 });
 wss.on('connection', function connection(ws) {
   ws.on('message', function message(data) {
     console.log('received: %s', data);
-    // Example: Start Docker container with received command
-    exec(`docker run --rm recovery-tool ${data}`, (err, stdout, stderr) => {
-      if (err) {
+    const args = sanitizeArgs(data);
+    if (!args) {
+      ws.send('Error: invalid characters in command');
+      return;
+    }
+    const cmd = spawn('docker', ['run', '--rm', 'recovery-tool', ...args]);
+    let stdout = '';
+    let stderr = '';
+    cmd.stdout.on('data', chunk => {
+      stdout += chunk;
+    });
+    cmd.stderr.on('data', chunk => {
+      stderr += chunk;
+    });
+    cmd.on('close', code => {
+      if (code !== 0) {
         ws.send(`Error: ${stderr}`);
-        return;
+      } else {
+        ws.send(`Output: ${stdout}`);
       }
-      ws.send(`Output: ${stdout}`);
     });
   });
 });
