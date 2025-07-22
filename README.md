@@ -30,5 +30,6 @@ npm start
 The recovery process can be started by POSTing to `/start_recovery`.
 =======
 The API exposes an endpoint `/start_recovery` that expects a JSON body
-with a `drive_path` field pointing to a valid `/dev` device.
+with a `drive_path` field pointing to a valid `/dev` device or partition
+(e.g., `/dev/sda` or `/dev/sda1`).
 
