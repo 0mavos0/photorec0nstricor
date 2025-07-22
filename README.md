@@ -53,6 +53,10 @@ npm start
 ```
 
 The recovery process can be started by POSTing to `/start_recovery`.
+
+The endpoint expects a JSON body with a `drive_path` field pointing to a valid
+`/dev` device.
+=======
 The API exposes an endpoint `/start_recovery` that expects a JSON body
 with a `drive_path` field pointing to a valid `/dev` device or partition
 (e.g., `/dev/sda` or `/dev/sda1`).
@@ -74,4 +78,5 @@ curl -X POST http://localhost:5000/start_recovery \
 ```
 
 Progress updates will stream to connected clients under the `/recovery` namespace.
+
 
