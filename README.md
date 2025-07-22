@@ -36,34 +36,17 @@ python -m app.main
 
 ## Node Socket.IO Server
 
-A small Node.js server now uses Socket.IO to serve the React frontend and forward commands to a Docker container. Install the dependencies and run:
-=======
-
-## Node Socket.IO Server
-
-A small Node.js server now uses Socket.IO to serve the React frontend and forward commands to a Docker container. Install the dependencies and run:
-=======
-2. In a separate terminal, start the Node server:
-
-
+A small Node.js server serves the React frontend and forwards commands to a
+Docker container. Start it in another terminal:
 
 ```bash
 npm install
 npm start
 ```
 
-The recovery process can be started by POSTing to `/start_recovery`.
-
-The endpoint expects a JSON body with a `drive_path` field pointing to a valid
-`/dev` device.
-=======
-The API exposes an endpoint `/start_recovery` that expects a JSON body
-with a `drive_path` field pointing to a valid `/dev` device or partition
-(e.g., `/dev/sda` or `/dev/sda1`).
-
-WebSocket communication happens via Socket.IO on the same port. Clients
-can emit a `command` event and listen for `output` messages.
-
+The recovery process can be started by POSTing to `/start_recovery`. The
+endpoint expects a JSON body with a `drive_path` field (e.g. `/dev/sda`).
+WebSocket messages stream progress under the `/recovery` namespace.
 
 Navigate to `http://localhost:3000` to use the frontend.
 
