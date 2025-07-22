@@ -78,6 +78,14 @@ curl -X POST http://localhost:5000/start_recovery \
 ```
 
 Progress updates will stream to connected clients under the `/recovery` namespace.
+## Command line usage
+
+Run the interactive CLI to start a recovery session:
+
+```bash
+python -m app.cli
+```
+
 
 ## Running tests
 
