@@ -33,3 +33,12 @@ python main.py
 
 
 
+
+## Node WebSocket Server
+
+A simple Node.js server using Express and `ws` serves the React frontend and forwards commands to a Docker container. Install the dependencies and run:
+
+```bash
+npm install
+npm start
+```
