@@ -14,3 +14,17 @@ services:
       - redis
   redis:
     image: redis:alpine
+
+  websocket:
+    build:
+      context: .
+      dockerfile: Dockerfile.node
+    command: node node_server.js
+    ports:
+      - "3000:3000"
+      - "8080:8080"
+    volumes:
+      - .:/app
+      - ./frontend/build:/app/frontend/build
+    depends_on:
+      - web
