@@ -19,7 +19,16 @@ pip install -r requirements.txt
 python -m app.main
 ```
 
+## Node WebSocket Server
+
+A simple Node.js server using Express and `ws` serves the React frontend and forwards commands to a Docker container. Install the dependencies and run:
+
+```bash
+npm install
+npm start
+```
 The recovery process can be started by POSTing to `/start_recovery`.
 =======
 The API exposes an endpoint `/start_recovery` that expects a JSON body
 with a `drive_path` field pointing to a valid `/dev` device.
+
