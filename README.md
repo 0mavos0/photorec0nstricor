@@ -79,4 +79,20 @@ curl -X POST http://localhost:5000/start_recovery \
 
 Progress updates will stream to connected clients under the `/recovery` namespace.
 
+## Running tests
+
+Python tests are executed with `pytest`:
+
+```bash
+pip install -r requirements.txt
+pytest
+```
+
+Node tests use `jest` and can be run with:
+
+```bash
+npm install
+npm test
+```
+
 
