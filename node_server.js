@@ -1,5 +1,9 @@
 const express = require('express');
+const http = require('http');
 const path = require('path');
+const { Server } = require('socket.io');
+const { exec } = require('child_process');
+
 const { WebSocketServer } = require('ws');
 const { spawn } = require('child_process');
 
@@ -11,18 +15,26 @@ function sanitizeArgs(data) {
   return str.length > 0 ? str.split(/\s+/) : [];
 }
 
+
 const app = express();
 const port = 3000;
 
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, 'frontend/build')));
+const server = http.createServer(app);
+const io = new Server(server, { cors: { origin: '*' } });
 
-// WebSocket server for real-time communication
-const wss = new WebSocketServer({ port: 8080 });
-
-wss.on('connection', function connection(ws) {
-  ws.on('message', function message(data) {
+io.on('connection', (socket) => {
+  socket.on('command', (data) => {
     console.log('received: %s', data);
+
+    exec(`docker run --rm recovery-tool ${data}`, (err, stdout, stderr) => {
+      if (err) {
+        socket.emit('output', `Error: ${stderr}`);
+        return;
+      }
+      socket.emit('output', `Output: ${stdout}`);
+
     const args = sanitizeArgs(data);
     if (!args) {
       ws.send('Error: invalid characters in command');
@@ -43,10 +55,11 @@ wss.on('connection', function connection(ws) {
       } else {
         ws.send(`Output: ${stdout}`);
       }
+
     });
   });
 });
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
