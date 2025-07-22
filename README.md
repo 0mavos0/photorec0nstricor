@@ -19,16 +19,18 @@ pip install -r requirements.txt
 python -m app.main
 ```
 
-## Node WebSocket Server
+## Node Socket.IO Server
 
-A simple Node.js server using Express and `ws` serves the React frontend and forwards commands to a Docker container. Install the dependencies and run:
+A small Node.js server now uses Socket.IO to serve the React frontend and forward commands to a Docker container. Install the dependencies and run:
 
 ```bash
 npm install
 npm start
 ```
 The recovery process can be started by POSTing to `/start_recovery`.
-=======
 The API exposes an endpoint `/start_recovery` that expects a JSON body
 with a `drive_path` field pointing to a valid `/dev` device.
+
+WebSocket communication happens via Socket.IO on the same port. Clients
+can emit a `command` event and listen for `output` messages.
 
