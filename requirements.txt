@@ -1,0 +1,6 @@
+Flask
+Flask-Cors
+Flask-Redis
+Flask-SocketIO
+pexpect
+redis
