@@ -1,4 +1,6 @@
 Flask
+flask-redis
+flask-socketio
 Flask-Cors
 Flask-Redis
 Flask-SocketIO
